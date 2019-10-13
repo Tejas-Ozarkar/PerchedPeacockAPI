@@ -1,0 +1,11 @@
+
+spring:
+  application:
+    name: parking-lot-system
+  data:
+    mongodb:
+      uri: mongodb://asteria:asteria1@ds227459.mlab.com:27459/asteriax
+
+  secret: secret
+
+
