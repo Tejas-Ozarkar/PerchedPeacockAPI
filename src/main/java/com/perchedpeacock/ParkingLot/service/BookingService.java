@@ -62,11 +62,22 @@ public class BookingService {
             long diffMinutes = diff / (60 * 1000) % 60;
             ParkingLot parkingLot = mongoOperations.findById(booking.getLotId(),ParkingLot.class);
             ParkingSpace parkingSpace = mongoOperations.findById(parkingLot.getParkingSpaceId(),ParkingSpace.class);
-            float amount = diffHours*parkingSpace.getCostPerHour() + (diffMinutes/parkingSpace.getCostPerHour());
-            System.out.println("Amount"+ amount);
-            if(diffHours==0){
-                amount = parkingSpace.getCostPerHour();
+            Vehicle vehicle = mongoOperations.findById(booking.getVehicleId(), Vehicle.class);
+            float amount;
+            if(vehicle.getType()==1){
+                if(diffHours==0){
+                    amount = parkingSpace.getCostPerHourTwoWheeler();
+                }else {
+                    amount = diffHours * parkingSpace.getCostPerHourTwoWheeler() + (diffMinutes / parkingSpace.getCostPerHourTwoWheeler());
+                }
+            }else{
+                if(diffHours==0){
+                    amount = parkingSpace.getCostPerHourFourWheeler();
+                }else {
+                    amount = diffHours * parkingSpace.getCostPerHourFourWheeler() + (diffMinutes / parkingSpace.getCostPerHourFourWheeler());
+                }
             }
+
             booking.setAmount(amount);
             mongoOperations.save(booking);
             parkingLot.setStatus(true);

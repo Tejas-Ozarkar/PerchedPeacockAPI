@@ -11,7 +11,9 @@ public class ParkingSpace {
 
     private String name;
 
-    private float costPerHour;
+    private float costPerHourTwoWheeler;
+
+    private float costPerHourFourWheeler;
 
     private int twoWheelerParkingCount;
 
@@ -35,12 +37,20 @@ public class ParkingSpace {
         this.name = name;
     }
 
-    public float getCostPerHour() {
-        return costPerHour;
+    public float getCostPerHourTwoWheeler() {
+        return costPerHourTwoWheeler;
     }
 
-    public void setCostPerHour(float costPerHour) {
-        this.costPerHour = costPerHour;
+    public void setCostPerHourTwoWheeler(float costPerHourTwoWheeler) {
+        this.costPerHourTwoWheeler = costPerHourTwoWheeler;
+    }
+
+    public float getCostPerHourFourWheeler() {
+        return costPerHourFourWheeler;
+    }
+
+    public void setCostPerHourFourWheeler(float costPerHourFourWheeler) {
+        this.costPerHourFourWheeler = costPerHourFourWheeler;
     }
 
     public int getTwoWheelerParkingCount() {
