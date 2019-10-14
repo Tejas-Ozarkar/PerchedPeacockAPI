@@ -1,4 +1,4 @@
-# PerchedPeacockUI  
+# PerchedPeacockAPI  
 
 **Live Project URL**: 
  [http://perchedpeacock.s3-website.us-east-2.amazonaws.com](http://perchedpeacock.s3-website.us-east-2.amazonaws.com/)
