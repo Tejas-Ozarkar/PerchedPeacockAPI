@@ -2,21 +2,29 @@ package com.perchedpeacock.ParkingLot.model;
 
 import org.springframework.data.annotation.Id;
 
+import javax.validation.constraints.NotBlank;
+
 public class Vehicle {
     @Id
     private String id;
 
+    @NotBlank
     private String licence;
 
+    @NotBlank
     private String model;
 
+    @NotBlank
     private String color;
 
+    @NotBlank
     private String userId;
 
+    @NotBlank
     private String weight;
 
     // 1: 2 wheeler; 2: Four Wheeler
+    @NotBlank
     private int type;
 
     public String getId() {

@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Document
@@ -12,10 +13,13 @@ public class Booking {
     @Id
     private String id;
 
+    @NotBlank
     private String vehicleId;
+
+    @NotBlank
     private String lotId;
 
-
+    @NotBlank
     private String checkin;
     private String checkout;
 

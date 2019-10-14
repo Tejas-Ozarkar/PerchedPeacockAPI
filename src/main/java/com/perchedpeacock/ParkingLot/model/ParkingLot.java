@@ -3,16 +3,20 @@ package com.perchedpeacock.ParkingLot.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotBlank;
+
 @Document
 public class ParkingLot {
 
     @Id
     private String id;
 
+    @NotBlank
     private String parkingSpaceId;
 
     private boolean status;
 
+    @NotBlank
     private int type;
 
     public String getId() {
