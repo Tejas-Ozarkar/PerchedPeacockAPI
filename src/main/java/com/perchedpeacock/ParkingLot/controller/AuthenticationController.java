@@ -28,7 +28,7 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
     @Autowired
-    MongoOperations mongoOperations;;
+    MongoOperations mongoOperations;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<AuthResponse> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
