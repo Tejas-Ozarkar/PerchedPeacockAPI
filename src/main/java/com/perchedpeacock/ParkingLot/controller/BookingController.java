@@ -1,6 +1,7 @@
 package com.perchedpeacock.ParkingLot.controller;
 
 import com.perchedpeacock.ParkingLot.model.Booking;
+import com.perchedpeacock.ParkingLot.model.BookingResponse;
 import com.perchedpeacock.ParkingLot.model.HttpResponse;
 import com.perchedpeacock.ParkingLot.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ public class BookingController {
     BookingService bookingService;
 
     @GetMapping()
-    public ResponseEntity<List<Booking>> getBookings(){
-        List<Booking> bookings = bookingService.getBookings();
+    public ResponseEntity<List<BookingResponse>> getBookings(){
+        List<BookingResponse> bookings = bookingService.getBookings();
         return ResponseEntity.status(200).body(bookings);
     }
 

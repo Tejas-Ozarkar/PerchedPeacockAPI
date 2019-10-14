@@ -23,16 +23,32 @@ public class BookingService {
     @Autowired
     UserService userService;
 
-    public List<Booking> getBookings(){
+    public List<BookingResponse> getBookings(){
+        List<BookingResponse> bookingResponse = new ArrayList<>();
         User user = userService.getAuthorizeUser();
         Query query1 = new Query(Criteria.where("userId").is(user.getId()));
         List<Vehicle> vehicles = mongoOperations.find(query1, Vehicle.class);
         List<Booking> bookings = new ArrayList<Booking>();
         for(int i = 0;i<vehicles.size(); i++){
             Query query2 = new Query(Criteria.where("vehicleId").is(vehicles.get(i).getId()));
-            bookings.addAll(mongoOperations.find(query2, Booking.class));
+            List<Booking> bookingsPerVehicle = mongoOperations.find(query2, Booking.class);
+            for(int j = 0;j<bookingsPerVehicle.size();j++){
+                Booking booking = bookingsPerVehicle.get(j);
+                ParkingLot parkingLot = mongoOperations.findById(booking.getLotId(), ParkingLot.class);
+                ParkingSpace parkingSpace = mongoOperations.findById(parkingLot.getParkingSpaceId(), ParkingSpace.class);
+                BookingResponse response = new BookingResponse();
+                response.setAmount(booking.getAmount());
+                response.setCheckin(booking.getCheckin());
+                response.setCheckout(booking.getCheckout());
+                response.setParkingSpace(parkingSpace);
+                response.setVehicleColor(vehicles.get(i).getColor());
+                response.setVehicleLicence(vehicles.get(i).getLicence());
+                response.setVehicleModel(vehicles.get(i).getModel());
+                bookingResponse.add(response);
+            }
         }
-        return bookings;
+
+        return bookingResponse;
     }
 
     public void createBooking(Booking booking) {
