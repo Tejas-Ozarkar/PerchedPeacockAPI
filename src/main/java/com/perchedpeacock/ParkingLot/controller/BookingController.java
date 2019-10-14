@@ -20,7 +20,7 @@ public class BookingController {
     @GetMapping()
     public ResponseEntity<List<Booking>> getBookings(){
         List<Booking> bookings = bookingService.getBookings();
-        return ResponseEntity.status(200).body(bookings);x
+        return ResponseEntity.status(200).body(bookings);
     }
 
     @PostMapping("/create")
