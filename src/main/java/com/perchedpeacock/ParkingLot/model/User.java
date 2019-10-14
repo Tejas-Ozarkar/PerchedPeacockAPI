@@ -22,6 +22,8 @@ public class User {
 
     private Long mobile;
 
+    private int type;
+
     public String getId() {
         return id;
     }
@@ -60,5 +62,13 @@ public class User {
 
     public void setMobile(Long mobile) {
         this.mobile = mobile;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

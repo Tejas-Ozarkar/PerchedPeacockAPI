@@ -33,9 +33,9 @@ public class BookingController {
     }
 
     @PostMapping("/checkout")
-    public String checkout(@RequestBody Booking booking){
-        bookingService.checkout(booking);
-        return "Checkout";
+    public ResponseEntity<Booking> checkout(@RequestBody Booking booking){
+        Booking updatedBooking = bookingService.checkout(booking);
+        return ResponseEntity.status(200).body(updatedBooking);
     }
 
     @PostMapping("/payment")

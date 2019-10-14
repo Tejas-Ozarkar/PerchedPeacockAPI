@@ -28,7 +28,6 @@ public class BookingService {
         User user = userService.getAuthorizeUser();
         Query query1 = new Query(Criteria.where("userId").is(user.getId()));
         List<Vehicle> vehicles = mongoOperations.find(query1, Vehicle.class);
-        List<Booking> bookings = new ArrayList<Booking>();
         for(int i = 0;i<vehicles.size(); i++){
             Query query2 = new Query(Criteria.where("vehicleId").is(vehicles.get(i).getId()));
             List<Booking> bookingsPerVehicle = mongoOperations.find(query2, Booking.class);
@@ -37,13 +36,9 @@ public class BookingService {
                 ParkingLot parkingLot = mongoOperations.findById(booking.getLotId(), ParkingLot.class);
                 ParkingSpace parkingSpace = mongoOperations.findById(parkingLot.getParkingSpaceId(), ParkingSpace.class);
                 BookingResponse response = new BookingResponse();
-                response.setAmount(booking.getAmount());
-                response.setCheckin(booking.getCheckin());
-                response.setCheckout(booking.getCheckout());
+                response.setBooking(booking);
                 response.setParkingSpace(parkingSpace);
-                response.setVehicleColor(vehicles.get(i).getColor());
-                response.setVehicleLicence(vehicles.get(i).getLicence());
-                response.setVehicleModel(vehicles.get(i).getModel());
+                response.setVehicle(vehicles.get(i));
                 bookingResponse.add(response);
             }
         }
@@ -58,7 +53,7 @@ public class BookingService {
         mongoOperations.save(booking);
     }
 
-    public void checkout(Booking booking){
+    public Booking checkout(Booking booking){
         try{
             Date checkin=new SimpleDateFormat("dd-M-yyyy hh:mm:ss").parse(booking.getCheckin());
             Date checkout=new SimpleDateFormat("dd-M-yyyy hh:mm:ss").parse(booking.getCheckout());
@@ -69,15 +64,18 @@ public class BookingService {
             ParkingSpace parkingSpace = mongoOperations.findById(parkingLot.getParkingSpaceId(),ParkingSpace.class);
             float amount = diffHours*parkingSpace.getCostPerHour() + (diffMinutes/parkingSpace.getCostPerHour());
             System.out.println("Amount"+ amount);
+            if(diffHours==0){
+                amount = parkingSpace.getCostPerHour();
+            }
             booking.setAmount(amount);
+            mongoOperations.save(booking);
+            parkingLot.setStatus(true);
+            mongoOperations.save(parkingLot);
+            return booking;
         }catch(Exception e){
             System.out.println("Failed to date");
         }
-        mongoOperations.save(booking);
-        ParkingLot parkingLot = mongoOperations.findById(booking.getLotId(), ParkingLot.class);
-        parkingLot.setStatus(true);
-        mongoOperations.save(parkingLot);
-        System.out.println("checkout");
+        return null;
     }
 
     public void payment(Booking booking){
